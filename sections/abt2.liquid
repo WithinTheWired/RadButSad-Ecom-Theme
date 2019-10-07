@@ -1,0 +1,135 @@
+<div class="page-width">
+  <div class="section-block section-block--padding">
+    <div class="flex flex--grid flex--no-gutter">
+      {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'image_block' %}
+            <div class="flex__item flex flex--center-vertical" {{ block.shopify_attributes }}>
+            
+              </div>
+              <div class="flex__item small--one-whole medium-up--one-third image-content__text text-{{ block.settings.align }}">
+                <p class="h2">{{ block.settings.title }}</p></h2>
+                <div class="rte-setting">{{ block.settings.text }}</div>
+                {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" class="h6">{{ block.settings.cta_label }} →</a>{% endif %}
+              </div>
+            
+              <div class="flex__item small--one-whole">
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.image.alt }}" class="image-content__image">
+                {% else %}
+                  <div class="image-content__image">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+              </div>
+            
+              <div class="flex__item small--one-whole medium-up--one-half">
+                {% if block.settings.image != blank %}
+                  {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
+                    <img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ block.settings.image.alt }}" class="image-content__image">
+                  {% if block.settings.link != blank %}</a>{% endif %}
+                {% else %}
+                  <div class="image-content__image">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+              </div>
+   
+          </div>
+          {% when 'text_block' %}
+          <div class="flex__item flex flex--center-vertical small--one-whole medium-up--one-whole" {{ block.shopify_attributes }}>
+              <div class="flex__item text-content__text text-{{ block.settings.align }}">
+                <p class="hero__title hero__title--has-link rainbow">{{ block.settings.title }}</p>
+                <hr>
+                <div class="rte-setting">{{ block.settings.text }}</div>
+              </div>
+          </div>
+          {% endcase %}
+ 
+      {% endfor %}
+    </div>   
+  </div>
+
+{% schema %}
+  {
+    "name": "About",
+    "max_blocks": 10,
+    "blocks": [
+      {
+        "type": "image_block",
+        "name": "Image Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "radio",
+            "id": "align-img",
+            "label": "Image alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Image with text"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "Link label",
+            "default": "Link label"
+          }
+         
+        ]
+      },
+      {
+        "type": "text_block",
+        "name": "Text Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Image with text"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+          }
+         
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image with text",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "image_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

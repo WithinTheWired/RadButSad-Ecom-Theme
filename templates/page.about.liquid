@@ -1,0 +1,141 @@
+<html lang="en">
+<body>
+  <div id="about-cont">
+
+    <div id="about-main">
+      <div class="abt-title">
+        {% section 'article-template' %}
+      </div>
+      <div class="abt-content2">
+          <div class="abt-half hlf">
+        </div>
+          <h3 class="abt-other hlf">
+
+        <div class="rte rich-text__text--{{ section.settings.text_size }}">
+      {% if section.settings.text != blank %}
+        {{ section.settings.text }}
+      {% else %}
+        <p>{{ 'homepage.onboarding.no_content' | t }}</p>
+      {% endif %}
+      </div>
+
+
+        </h3>
+      </div>  
+    </div>
+  </div>
+
+</body>
+
+
+  <style>
+    #about-cont {
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    }
+    .Message {
+      display: none;
+    }
+    
+    @media only screen and (max-width: 600px) {
+    .abt-half, .abt-other {
+      width: 100% !important;
+    }
+    .abt-half {
+      margin-bottom: 1em;
+      padding-top: 60% !important;
+    }
+    .abt-content2 {
+      margin: 0 !important;
+      -webkit-box-shadow: 0 0 0 0 !important;
+              box-shadow: 0 0 0 0 !important;
+      border-radius: 0 !important;
+    }
+     #about-main {
+       margin: 0 !important;
+       border-radius: 0 !important;
+       background-position: center center !important;
+     }
+  }
+    
+    .nav-head h2:nth-child(3) a {
+      background-image: -webkit-linear-gradient(28deg, #8FD3F4 0%, #84FAB0 100%);
+      background-image: -o-linear-gradient(28deg, #8FD3F4 0%, #84FAB0 100%);
+      background-image: linear-gradient(62deg, #8FD3F4 0%, #84FAB0 100%);
+	  border-radius: 12px;
+      padding: .5em 1em;
+      color: white !important;
+    }
+    #about-main {
+      display:-webkit-box;
+      display:-ms-flexbox;
+      display:flex;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      max-width: 1200px;
+      width: 100%;
+      background-image: url({{ 'backpath.png' | asset_img_url: '1200x' }});
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 70px;
+      padding: 1em 0em 1.2em 0em;
+      margin: 2em 3%;
+    }
+    
+    .abt-content2 {
+      margin: 1em 3em;
+      border-radius: 53px;
+      -webkit-box-shadow: 0 8px 26px -4px rgba(0,0,0,0.19);
+              box-shadow: 0 8px 26px -4px rgba(0,0,0,0.19);
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap:wrap;
+          flex-wrap:wrap;
+      padding: 2em;
+    }
+    
+    .abt-title {
+      background:black;
+      margin: 1em 3em;
+      border-radius: 23px;
+    }
+    
+    .abt-title h1 {
+      font-family: Nunito !important;
+      margin-left: 1em;
+    }
+    .abt-half {
+      width: 50%;
+      padding-right: 1em;
+      padding-top: 32%;
+      background-image: url({{ 'im_monkey.jpg' | asset_img_url: '1200x' }}); 
+      background-size: cover;
+    }
+    
+    .abt-other {
+      width: 50%;
+      line-height: 2em;
+      font-size: 1.2em;
+      color:white;
+      font-family: Nunito;
+      padding-left: 1em;
+    }
+    
+    .abt-title h1 {
+      padding: .5em;
+    }
+  </style>
+  
+</html>
+

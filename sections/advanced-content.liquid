@@ -1,0 +1,298 @@
+<div class="wrapper">
+  <div class="custom-content">
+  {% if section.settings.title != blank %}
+    <div class="grid__item">
+      <h2 class="small--text-center">{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+  {% for block in section.blocks %}
+    {% case block.settings.width %}
+      {% when '25%' %}
+        {%- assign block_width = 'small--one-whole one-quarter' -%}
+      {% when '33%' %}
+        {%- assign block_width = 'small--one-whole one-third' -%}
+      {% when '50%' %}
+        {%- assign block_width = 'small--one-whole one-half' -%}
+      {% when '66%' %}
+        {%- assign block_width = 'small--one-whole two-thirds' -%}
+      {% when '75%' %}
+        {%- assign block_width = 'small--one-whole three-quarters' -%}
+      {% when '100%' %}
+        {%- assign block_width = 'one-whole' -%}
+    {% endcase %}
+    <div class="custom__item {{ block_width }} {% if block.settings.alignment %}align--{{ block.settings.alignment }}{% endif %}" {{ block.shopify_attributes }}>
+      <div class="custom__item-inner custom__item-inner--{{ block.type }}">
+        {% case block.type %}
+          {% when 'html' %}
+            {% if block.settings.code != blank %}
+              <div class="rte" data-section-id="{{ section.id }}" data-section-type="featured-content-section">
+                <p class="textarea">{{ block.settings.code }}</p>
+              </div>
+            {% else %}
+              <div class="rte">
+                {{ 'homepage.onboarding.no_content' | t }}
+              </div>
+            {% endif %}
+        {% endcase %}
+      </div>
+    </div>
+  {% endfor %}
+  {% if section.blocks.size == 0 %}
+    <div class="wrapper">
+      <div class="grid">
+        <div class="grid__item">
+          <div class="rte">
+            {{ 'homepage.onboarding.no_content' | t }}
+          </div>
+        </div>
+      </div>
+   </div>
+  {% endif %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Benutzerdefiniertes HTML",
+    "en": "Custom HTML",
+    "es": "HTML personalizado",
+    "fr": "Code HTML personnalisé",
+    "it": "HTML personalizzato",
+    "ja": "HTMLをカスタムする",
+    "pt-BR": "HTML personalizado"
+  },
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "Titre",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      },
+      "default": {
+        "de": "Über Ihre Marke sprechen",
+        "en": "Talk about your brand",
+        "es": "Habla de tu marca",
+        "fr": "Parlez de votre marque",
+        "it": "Parla del tuo brand",
+        "ja": "あなたのブランドについて語る",
+        "pt-BR": "Fale sobre a sua marca"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "html",
+      "name": {
+        "de": "Benutzerdefiniertes HTML",
+        "en": "Custom HTML",
+        "es": "HTML personalizado",
+        "fr": "Code HTML personnalisé",
+        "it": "HTML personalizzato",
+        "ja": "HTMLをカスタムする",
+        "pt-BR": "HTML personalizado"
+      },
+      "settings": [
+        {
+          "type": "html",
+          "id": "code",
+          "label": {
+            "de": "HTML",
+            "en": "HTML",
+            "es": "HTML",
+            "fr": "HTML",
+            "it": "HTML",
+            "ja": "HTML",
+            "pt-BR": "HTML"
+          },
+          "default": {
+            "de": "<strong>Formatieren Sie Ihren Text mit HTML, damit er leichter lesbar ist.</strong> Mit diesem Text können Sie Ihre Kunden über Ihre Marke informieren.",
+            "en": "<strong>Use HTML to format your text so it can be easily read.</strong> This text can be used to share information about your brand with customers.",
+            "es": "<strong>Usa HTML para formatear tu texto para que se pueda leer fácilmente.</strong> Este texto se puede usar para compartir información sobre tu marca con los clientes.",
+            "fr": "<strong>Utilisez le code HTML pour formater votre texte afin qu'il puisse être facilement lu.</strong> Vous pouvez utiliser ce texte pour partager des informations sur votre marque avec les clients.",
+            "it": "<strong>Utilizza l'HTML per formattare il testo in modo che sia facilmente leggibile.</strong> Questo testo può essere utilizzato per condividere le informazioni sul tuo brand con i clienti.",
+            "ja": "<strong>テキストが読みやすくなるように、HTMLを使用して書式設定します。</strong>このテキストは、あなたのブランドに関する情報をお客様と共有するために使用できます。",
+            "pt-BR": "<strong>Use HTML para formatar seu texto, assim ele pode ser lido com facilidade.</strong> Esse texto pode ser usado para compartilhar informações sobre sua marca com os clientes."
+          }
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": {
+            "de": "Containerbreite",
+            "en": "Container width",
+            "es": "Ancho del contenedor",
+            "fr": "Largeur du conteneur",
+            "it": "Larghezza contenitore",
+            "ja": "コンテナーの幅",
+            "pt-BR": "Largura do recipiente"
+          },
+          "default": "100%",
+          "options": [
+            {
+              "value": "25%",
+              "label": {
+                "de": "25 %",
+                "en": "25%",
+                "es": "25%",
+                "fr": "25 %",
+                "it": "25%",
+                "ja": "25%",
+                "pt-BR": "25%"
+              }
+            },
+            {
+              "value": "33%",
+              "label": {
+                "de": "33 %",
+                "en": "33%",
+                "es": "33%",
+                "fr": "33 %",
+                "it": "33%",
+                "ja": "33%",
+                "pt-BR": "33%"
+              }
+            },
+            {
+              "value": "50%",
+              "label": {
+                "de": "50 %",
+                "en": "50%",
+                "es": "50%",
+                "fr": "50 %",
+                "it": "50%",
+                "ja": "50%",
+                "pt-BR": "50%"
+              }
+            },
+            {
+              "value": "66%",
+              "label": {
+                "de": "66 %",
+                "en": "66%",
+                "es": "66%",
+                "fr": "66 %",
+                "it": "66%",
+                "ja": "66%",
+                "pt-BR": "66%"
+              }
+            },
+            {
+              "value": "75%",
+              "label": {
+                "de": "75 %",
+                "en": "75%",
+                "es": "75%",
+                "fr": "75 %",
+                "it": "75%",
+                "ja": "75%",
+                "pt-BR": "75%"
+              }
+            },
+            {
+              "value": "100%",
+              "label": {
+                "de": "100 %",
+                "en": "100%",
+                "es": "100%",
+                "fr": "100 %",
+                "it": "100%",
+                "ja": "100%",
+                "pt-BR": "100%"
+              }
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": {
+            "de": "Vertikale Ausrichtung",
+            "en": "Vertical alignment",
+            "es": "Alineación vertical",
+            "fr": "Alignement vertical",
+            "it": "Allineamento verticale",
+            "ja": "垂直アラインメント",
+            "pt-BR": "Alinhamento vertical"
+          },
+          "default": "top-middle",
+          "options": [
+            {
+              "value": "top-middle",
+              "label": {
+                "de": "Oben",
+                "en": "Top",
+                "es": "Superior",
+                "fr": "En haut",
+                "it": "In alto",
+                "ja": "上",
+                "pt-BR": "Acima"
+              }
+            },
+            {
+              "value": "center",
+              "label": {
+                "de": "Mittig",
+                "en": "Middle",
+                "es": "Al medio",
+                "fr": "Au milieu",
+                "it": "Al centro",
+                "ja": "中央",
+                "pt-BR": "Meio"
+              }
+            },
+            {
+              "value": "bottom-middle",
+              "label": {
+                "de": "Unten",
+                "en": "Bottom",
+                "es": "Inferior",
+                "fr": "En bas",
+                "it": "In basso",
+                "ja": "下",
+                "pt-BR": "Abaixo"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Benutzerdefiniertes HTML",
+        "en": "Custom HTML",
+        "es": "HTML personalizado",
+        "fr": "Code HTML personnalisé",
+        "it": "HTML personalizzato",
+        "ja": "HTMLをカスタムする",
+        "pt-BR": "HTML personalizado"
+      },
+      "category": {
+        "de": "Komplizierteres Layout",
+        "en": "Advanced layout",
+        "es": "Diseño avanzado",
+        "fr": "Mise en page avancée",
+        "it": "Layout avanzato",
+        "ja": "高度なレイアウト",
+        "pt-BR": "Layout avançado"
+      },
+      "blocks": [
+        {
+          "type": "html"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

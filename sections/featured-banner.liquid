@@ -1,0 +1,131 @@
+<div class="grid banner-wrapper">
+  <div class="grid__item banner slide-up-animation animated">
+    {% if section.settings.title != blank %}
+      <h2 class="small--text-center">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    {% unless section.settings.banner_url == blank %}
+      <a href="{{ section.settings.banner_url }}">
+    {% endunless %}
+    {% if section.settings.banner != blank %}
+      {%- assign img_url = section.settings.banner | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      {% capture image_size %}970x{% endcapture %}
+
+      <div class="supports-js" style="max-width: {{ 2048 | times: section.settings.banner.aspect_ratio | round }}px;">
+        <div class="banner__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.banner.aspect_ratio | times: 100}}%;">
+          <img class="banner__image lazyload"
+               src="{{ section.settings.banner | img_url: '300x300' }}"
+               data-src="{{ img_url }}"
+               data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+               data-aspectratio="{{ section.settings.banner.aspect_ratio }}"
+               data-sizes="auto"
+               style="max-width: {{ 2048 | times: section.settings.banner.aspect_ratio | round }}px;"
+               alt="{{ section.settings.banner.alt | default: shop.name }}"
+               itemprop="image">
+        </div>
+      </div>
+
+      <noscript>
+        <img class="banner__image" src="{{ section.settings.banner | img_url: image_size }}"
+        srcset="{{ section.settings.banner | img_url: image_size }} 1x, {{ section.settings.banner | img_url: image_size, scale: 2 }} 2x"
+        alt="{{ section.settings.banner.alt | default: shop.name }}"
+        itemprop="image">
+      </noscript>
+    {% else %}
+      <div class="placeholder-background">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endif %}
+    {% unless section.settings.banner_url == blank %}
+      </a>
+    {% endunless %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Feature-Banner",
+    "en": "Featured banner",
+    "es": "Banner destacado",
+    "fr": "Bannière en vedette",
+    "it": "Banner in primo piano",
+    "ja": "特集バナー",
+    "pt-BR": "Banner em destaque"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "Titre",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "banner",
+      "label": {
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      },
+      "info": {
+        "de": "Breite mindestens 970 Pixel",
+        "en": "970px wide minimum",
+        "es": "970px de ancho mínimo",
+        "fr": "970 px minimum",
+        "it": "Larghezza minima: 970 px",
+        "ja": "最小幅970ピクセル",
+        "pt-BR": "Mínimo de 970px de largura"
+      }
+    },
+    {
+      "type": "url",
+      "id": "banner_url",
+      "label": {
+        "de": "Bild-Link",
+        "en": "Image link",
+        "es": "Enlace de imagen",
+        "fr": "Lien vers l'image",
+        "it": "Link immagine",
+        "ja": "画像リンク",
+        "pt-BR": "Link da imagem"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Feature-Banner",
+        "en": "Featured banner",
+        "es": "Banner destacado",
+        "fr": "Bannière en vedette",
+        "it": "Banner in primo piano",
+        "ja": "特集バナー",
+        "pt-BR": "Banner em destaque"
+      },
+      "category": {
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    }
+  ],
+  "blocks": []
+}
+{% endschema %}

@@ -1,0 +1,386 @@
+{% if section.settings.show_announcement and section.settings.home_page_only == false or template.name == 'index' %}
+  <style>
+    .announcement-bar--link:hover {
+      {% assign brightness = settings.color_primary_color | color_brightness %}
+
+      {% if brightness <= 224 %}
+        background-color: {{ settings.color_primary_color | color_lighten: 4 }};
+      {% else %}
+        background-color: {{ settings.color_primary_color | color_darken: 8 }};
+      {% endif %}
+    }
+  </style>
+
+  {% if section.settings.announcement_link == blank %}
+    <div class="announcement-bar">
+  {% else %}
+    <a href="{{ section.settings.announcement_link }}" class="announcement-bar announcement-bar--link">
+  {% endif %}
+
+    <p class="announcement-bar__message site-wrapper">{{ section.settings.announcement_text | escape }}</p>
+
+  {% if section.settings.announcement_link == blank %}
+    </div>
+  {% else %}
+    </a>
+  {% endif %}
+{% else %}
+  <div class="page-border"></div>
+{% endif %}
+
+{% unless section.settings.logo == blank %}
+  {%- assign logo_max_height = section.settings.logo_max_width | divided_by: section.settings.logo.aspect_ratio -%}
+  {% if logo_max_height > 600 %}
+    {%- assign logo_max_width = 600 | times: section.settings.logo.aspect_ratio -%}
+  {% else %}
+    {%- assign logo_max_width = section.settings.logo_max_width -%}
+  {% endif %}
+
+  <style>
+    .site-header__logo {
+      width: {{ logo_max_width | escape | default: '150' | remove: 'px' | append: 'px'}};
+    }
+    #HeaderLogoWrapper {
+      max-width: {{ logo_max_width | escape | default: '150' | remove: 'px' | append: 'px'}} !important;
+    }
+  </style>
+{% endunless %}
+
+<div class="site-wrapper head">
+  <header class="site-header grid medium-up--grid--table logo" role="banner">
+    <div class="grid__item small--text-center">
+      <div itemscope itemtype="http://schema.org/Organization">
+        {% comment %}
+          Use the uploaded logo from theme settings if enabled.
+          Site name uses `h1` tag on homepage, div on other pages.
+        {% endcomment %}
+        {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        {% assign width = section.settings.logo_max_width | times: 1 %}
+        {% include 'image-style' with image: section.settings.logo, width: width, height: 600, small_style: false, wrapper_id: 'HeaderLogoWrapper', img_id: 'HeaderLogo' %}
+
+        {% if section.settings.logo %}
+          <div id="HeaderLogoWrapper" class="supports-js">
+            <a href="/" itemprop="url" style="padding-top:{{ 1 | divided_by: section.settings.logo.aspect_ratio | times: 100}}%; display: block;">
+              <img id="HeaderLogo"
+                   class="lazyload"
+                   src="{{ section.settings.logo | img_url: '150x150' }}"
+                   data-src="{{ img_url }}"
+                   data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                   data-sizes="auto"
+                   alt="{{ section.settings.logo.alt | default: shop.name }}"
+                   itemprop="logo">
+            </a>
+          </div>
+          <noscript>
+            {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
+            <a href="/" itemprop="url">
+              <img class="site-header__logo" src="{{ section.settings.logo | img_url: image_size }}"
+              srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+              alt="{{ section.settings.logo.alt | default: shop.name }}"
+              itemprop="logo">
+            </a>
+          </noscript>
+          {% if template.name == 'index' %}
+            <h1 class="visually-hidden">{{ shop.name }}</h1>
+          {% endif %}
+        {% else %}
+          {% if template.name == 'index' %}
+            <h1 class="site-header__site-name">
+              <a href="/" itemprop="url">{{ shop.name }}</a>
+            </h1>
+          {% else %}
+            <a href="/" class="site-header__site-name h1" itemprop="url">
+              {{ shop.name }}
+            </a>
+            {% if template.name == 'index' %}
+              <h1 class="visually-hidden">{{ shop.name }}</h1>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    {% unless section.settings.tagline == blank %}
+      <div class="grid__item medium-up--text-right small--text-center">
+        <div class="rte tagline">
+          {{ section.settings.tagline }}
+        </div>
+      </div>
+    {% endunless %}
+  </header>
+  
+  
+  
+  
+   <style>
+  .container {
+    display: none;
+    cursor: pointer;
+    padding-top: 2em;
+    z-index: 2;
+    padding-right: 1em;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-48deg) translate(-9px, 6px);
+    -ms-transform: rotate(-48deg) translate(-9px, 6px);
+        transform: rotate(-48deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+    
+.change .bar3 {
+    -webkit-transform: rotate(46deg) translate(-6px, -4px);
+    -ms-transform: rotate(46deg) translate(-6px, -4px);
+        transform: rotate(46deg) translate(-6px, -4px);
+}
+     
+ 
+  
+  
+</style>
+
+<div class="container" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<script>
+function myFunction(x) {
+    x.classList.toggle("change");
+    $(".nav-head").toggleClass("moby");
+}
+</script>
+  
+
+  
+  
+  
+  
+  <div class="nav-head">
+<!--     <h2><a class="help" href="">Home</a></h2> -->
+    {% for link in linklists.navbar.links %}
+    <h2><a id="bar" class="yeet" href="{{ link.url }}">{{ link.title }}</a></h2>
+	{% endfor %}
+    <h2><a href="#" class="head-cart">Cart</a></h2>
+  </div>
+   <div class="top-bar grid">
+    {% if shop.customer_accounts_enabled %}
+      <div class="grid__item medium-up--two-fifths small--hide">
+        <span class="customer-links small--hide">
+          {% if customer %}
+            {% if customer.first_name != blank %}
+              {% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
+              {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
+            {% else %}
+              <a href="/account">{{ 'layout.customer.account' | t }}</a>
+            {% endif %}
+            <span class="vertical-divider"></span>
+            {{ 'layout.customer.log_out' | t | customer_logout_link }}
+          {% else %}
+            {{ 'layout.customer.log_in' | t | customer_login_link }}
+            <span class="vertical-divider"></span>
+            {{ 'layout.customer.create_account' | t | customer_register_link }}
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+	
+   <div class="cart-cont"> 
+    <div>
+      <a href="/cart" class="site-header__cart">
+        {% include 'icon-cart' %}
+      </a>
+      {% comment %}
+      <a href="/cart" class="site-header__cart small--hide">
+        {{ 'cart.general.checkout' | t }}
+      </a>
+      {% endcomment %}
+    </div>
+  </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Titel",
+    "en": "Header",
+    "es": "Encabezado",
+    "fr": "En-tête",
+    "it": "Header",
+    "ja": "ヘッダー",
+    "pt-BR": "Cabeçalho"
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "de": "Logo",
+        "en": "Logo",
+        "es": "Logotipo",
+        "fr": "Logo",
+        "it": "Logo",
+        "ja": "ロゴ",
+        "pt-BR": "Logotipo"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": {
+        "de": "Logo-Foto",
+        "en": "Logo image",
+        "es": "Imagen del logotipo",
+        "fr": "Image du logo",
+        "it": "Immagine del logo",
+        "ja": "ロゴ画像",
+        "pt-BR": "Imagem do logotipo"
+      }
+    },
+    {
+      "type": "text",
+      "id": "logo_max_width",
+      "label": {
+        "de": "Benutzerdefinierte Logobreite (Pixel)",
+        "en": "Custom logo width (in pixels)",
+        "es": "Ancho del logotipo personalizado (en píxeles)",
+        "fr": "Largeur personnalisée du logo (en pixels)",
+        "it": "Larghezza logo personalizzato (in pixel)",
+        "ja": "ロゴの幅をカスタムする（ピクセルで）",
+        "pt-BR": "Largura do logotipo personalizado (em pixels)"
+      },
+      "default": {
+        "de": "150",
+        "en": "150",
+        "es": "150",
+        "fr": "150",
+        "it": "150",
+        "ja": "150",
+        "pt-BR": "150"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "de": "Ankündigungsleiste",
+        "en": "Announcement bar",
+        "es": "Barra de anuncios",
+        "fr": "Barre d'annonces",
+        "it": "Barra degli annunci",
+        "ja": "告知バー",
+        "pt-BR": "Barra de anúncio"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": {
+        "de": "Ankündigung anzeigen",
+        "en": "Show announcement",
+        "es": "Mostrar anuncio",
+        "fr": "Afficher l'annonce",
+        "it": "Mostra annuncio",
+        "ja": "告知を表示する",
+        "pt-BR": "Exibir anúncio"
+      },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "home_page_only",
+      "label": {
+        "de": "Nur Startseite",
+        "en": "Home page only",
+        "es": "Solo página de inicio",
+        "fr": "Page d'accueil uniquement",
+        "it": "Solo home page",
+        "ja": "ホームページのみ",
+        "pt-BR": "Apenas página inicial"
+      },
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": {
+        "de": "Ankündigungstext",
+        "en": "Announcement text",
+        "es": "Texto del anuncio",
+        "fr": "Texte d'annonce",
+        "it": "Testo annuncio",
+        "ja": "告知テキスト",
+        "pt-BR": "Texto do anúncio"
+      },
+      "default": {
+        "de": "Hier etwas ankündigen",
+        "en": "Announce something here",
+        "es": "Anuncia algo aquí",
+        "fr": "Annoncez quelque chose ici",
+        "it": "Annuncia qualcosa qui",
+        "ja": "ここで告知してください",
+        "pt-BR": "Anuncie algo aqui"
+      }
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": {
+        "de": "Ankündigungslink",
+        "en": "Announcement link",
+        "es": "Enlace de anuncio",
+        "fr": "Lien d'annonce",
+        "it": "Link annuncio",
+        "ja": "告知リンク",
+        "pt-BR": "Link de anúncio"
+      },
+      "info": {
+        "de": "Optional",
+        "en": "Optional",
+        "es": "Opcional",
+        "fr": "Facultatif",
+        "it": "Facoltativo",
+        "ja": "選択させる",
+        "pt-BR": "Opcional"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "de": "Tagline",
+        "en": "Tagline",
+        "es": "Eslogan",
+        "fr": "Slogan",
+        "it": "Tagline",
+        "ja": "タグライン",
+        "pt-BR": "Tagline"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "tagline",
+      "label": {
+        "de": "Text",
+        "en": "Text",
+        "es": "Texto",
+        "fr": "Texte",
+        "it": "Testo",
+        "ja": "テキスト",
+        "pt-BR": "Texto"
+      }
+    }
+  ]
+}
+{% endschema %}
